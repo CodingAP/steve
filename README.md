@@ -15,32 +15,20 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
-<!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/CodingAP/steve">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-<h3 align="center">STEVE</h3>
-
-  <p align="center">
-    This is a project description
-    <br />
-    <a href="https://github.com/CodingAP/steve"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/CodingAP/steve">View Demo</a>
-    ·
-    <a href="https://github.com/CodingAP/steve/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/CodingAP/steve/issues">Request Feature</a>
-  </p>
+    <h3 align="center">STEVE</h3>
+    <p align="center">
+        STEVE is a static webstie generator that is inspired by Jekyll
+        <br />
+        <strong>There is current no documentation, but there will be soon!</strong>
+        <br />
+        <br />
+        <a href="https://github.com/CodingAP/steve/issues">Report Bug</a>
+        ·
+        <a href="https://github.com/CodingAP/steve/issues">Request Feature</a>
+    </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -60,11 +48,9 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -72,10 +58,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `CodingAP`, `steve`, `Coding_AP`, `alex-prosser-a8524a221`, `alprosse_client`, `alprosse`, `STEVE`, `project_description`
+This project was created to get into professional Github repos and how to publish code that anyone can use. This isn't meant to be a replacement of Jekyll as it has a more established set of tools, but I wanted to create a Github repository that has a more clean and professional look 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -83,28 +66,19 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* Node.js
+* Uses Marked for Markdown to HTML conversion
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+You will need npm to run STEVE.
 * npm
   ```sh
   npm install npm@latest -g
@@ -112,44 +86,26 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/CodingAP/steve.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. Run the main file and it should be ready to go
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/CodingAP/steve/issues) for a full list of proposed features (and known issues).
+The only thing that the code exposes is the STEVE class, which can be used as such:
+```
+const Steve = require('./src/steve');
+Steve.compile('path/to/folder');
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -171,38 +127,21 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the Apache License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@Coding_AP](https://twitter.com/Coding_AP) - alprosse@uark.edu
+Your Name - [@Coding_AP](https://twitter.com/Coding_AP)
 
 Project Link: [https://github.com/CodingAP/steve](https://github.com/CodingAP/steve)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -218,20 +157,3 @@ Project Link: [https://github.com/CodingAP/steve](https://github.com/CodingAP/st
 [license-url]: https://github.com/CodingAP/steve/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/alex-prosser-a8524a221
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
