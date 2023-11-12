@@ -1,3 +1,19 @@
-const Steve = require('./src/steve');
+/**
+ * @module index
+ * index.js
+ * 
+ * Combines all the modules for one import
+ * 
+ * by Alex Prosser
+ * 11/10/2023
+ */
 
-Steve.compile('C:/Users/alex_/Desktop/Coding/site-testing');
+import STEVEPlugin from './src/core/plugin.js';
+import STEVE from './src/core/steve.js';
+import { SiteGenerator, SingleRoute, GeneratorRoute } from './src/plugin/site_generator.js';
+
+export {
+    STEVEPlugin,
+    STEVE,
+    SiteGenerator, SingleRoute, GeneratorRoute
+}
