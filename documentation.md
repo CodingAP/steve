@@ -1,30 +1,19 @@
-# STEVE Template Engine
+# STEVE
 
-### by AP
-#### Last Modified 11/10/23
-
-***ST***atic Sit***E*** Generator (***VE***ry cool)
-
-## Features
-
-`STEVE` supports many features including:
-- Template engine that uses JavaScript to process the text
-- Built-in site generator plugin with highly customizable options
-- Plugin support to create different types of generators
-- ExpressJS support to use for actual routing and SSR (Not implemented)
+### Last Modified: 11/12/2023
 
 ## Template Engine:
 Any file can be processed by `STEVE`. All it uses is `%{= // javascript code here =}%` to create a block that can be ran. Anything returned will be rendered. For example...
 
 ```javascript
-%{=
+<steve>
     const items = ['Hello', 'World', 'Hello', 'STEVE'];
     let content = '<ul>';
     for (let i = 0; i < items.length; i++) {
         content += `<li>${items[i]}</li>`;
     }
     return content + '</ul>';
-=}%
+</steve>
 ```
 
 ...would render...
@@ -45,19 +34,20 @@ These JavaScript blocks also have access to a global `STEVE` object that include
 To create a engine, use the `STEVE` object in NodeJS...
 
 Example:
+
 `template.steve`
 ```html
-<h1>Hello <steve> return STEVE.data.name </steve>!</h1>
-<p>Your number squared is <steve> return Math.pow(STEVE.data.number, 2) </steve>!</p>
+<h1>Hello <steve> return STEVE.data.name; </steve>!</h1>
+<p>Your number squared is <steve> return Math.pow(STEVE.data.number, 2); </steve>!</p>
 ```
 
 `index.js`
 ```javascript
-import fs from 'fs';
 import { STEVE } from 'steve';
 
 STEVE.renderFile('./template.steve', { number: 123, name: 'AP' });
 ```
+
 `output`
 ```
 <h1>Hello AP!</h1>
@@ -120,12 +110,10 @@ For multiple plugins, you can specify which plugin is currently used by using `a
 
 ```javascript
 ...
-
 STEVE.activePlugin = 'EXAMPLE1';
 // some code here
 STEVE.activePlugin = 'EXAMPLE2';
 // some other code here
-
 ...
 ```
 
@@ -134,20 +122,12 @@ Sometimes, you might want to add NodeJS modules into a `STEVEPlugin`. By default
 ```javascript
 ...
 augment() {
-    STEVE.globalModules['moduleName'] = module;
+    STEVE.globalModules.moduleName = module;
 }
 ...
 ```
 
-To see how a plugin in written, for example, this is the `StaticSiteGenerator` provided...
-
-```javascript
-class SiteGenerator extends STEVEPlugin {
-    PLUGIN_ID = 'SITE_GENERATOR';
-
-    // TODO: Put code for SiteGenerator here
-}
-```
+To see how a plugin in written, for example, go to the [SiteGenerator](https://github.com/CodingAP/steve/blob/main/src/plugin/site_generator.js) plugin source code.
 
 ## Site Generator Plugin
 `STEVE` has built-in site generator (that uses the plugin system) that allows for websites to be generated from several files that can be modified from the code rather than the pages themselves.

@@ -301,7 +301,7 @@ class SiteGenerator extends STEVEPlugin {
 
         return {
             staticFile
-        }
+        };
     }
 }
 
