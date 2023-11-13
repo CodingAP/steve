@@ -296,7 +296,7 @@ class SiteGenerator extends STEVEPlugin {
                 throw new Error(`The file, ${file}, does not exist in the \'staticDirectory\' (${this.staticDirectory})!`);
             }
 
-            return STEVE.globalModules.path.join('./static', file); 
+            return STEVE.globalModules.path.join('/static', file); 
         }
 
         return {
