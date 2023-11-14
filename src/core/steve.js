@@ -93,7 +93,7 @@ class STEVE {
             throw new Error('There are no plugins loaded, so this will not do anything!');
         }
 
-        this.plugins[this.activePlugin].generate(options);
+        return this.plugins[this.activePlugin].generate(options);
     }
 
     /**

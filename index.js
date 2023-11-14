@@ -5,7 +5,7 @@
  * Combines all the modules for one import
  * 
  * by Alex Prosser
- * 11/10/2023
+ * 11/12/2023
  */
 
 import STEVEPlugin from './src/core/plugin.js';
