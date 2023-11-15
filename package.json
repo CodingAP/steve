@@ -1,7 +1,7 @@
 {
     "name": "steve-template-engine",
-    "version": "2.0.2",
-    "description": "JS Template Engine",
+    "version": "2.1.0",
+    "description": "JS Template Engine with built-in Site Generator",
     "type": "module",
     "main": "index.js",
     "scripts": {

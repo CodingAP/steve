@@ -5,7 +5,7 @@
  * The code to make plugins that add to the functionality of STEVE
  * 
  * by Alex Prosser
- * 11/9/2023
+ * 11/15/2023
  */
 
 /**
@@ -22,7 +22,7 @@ class STEVEPlugin {
      * 
      * @abstract
      * @param {Record<string, any>} options Given options for the plugin 
-     * @returns {void}
+     * @returns {any}
      */
     generate(options) {
         throw new Error('The subclass must implement this method, \'generate\'!');

@@ -5,7 +5,7 @@
  * The main STEVE object that holds the template engine
  * 
  * by Alex Prosser
- * 11/10/2023
+ * 11/15/2023
  */
 
 import fs from 'fs';
@@ -13,7 +13,9 @@ import { readDirectoryAsStrings, objectToString } from '../helper.js';
 import STEVEPlugin from './plugin.js';
 
 /**
- * Class that contains static methods that generate files
+ * The STEVE class has methods to use the template engine to generate files
+ * 
+ * Use plugins to extend the features of STEVE
  */
 class STEVE {
     /**
@@ -168,45 +170,53 @@ class STEVE {
     /**
      * Runs all the JavaScript blocks and converts to one text file
      * 
-     * @param {string} content The raw content of the template file 
-     * @param {Record<string, any>} data The data to be rendered 
+     * @param {string} _content The raw content of the template file 
+     * @param {Record<string, any>} _data The data to be rendered 
      * @returns {string} The results of the conversion
      */
-    static #convertText(content, data) {
-        let result = '', current = '';
-        let checkForCode = false;
-        for (let i = 0; i < content.length; i++) {
-            current += content[i];
+    static #convertText(_content, _data) {
+        // all the underscored variables is to not interfere with the code running in the file generator
+        let _result = '', _current = '';
+        let _checkForCode = false;
+        for (let _i = 0; _i < _content.length; _i++) {
+            _current += _content[_i];
 
-            if (current.includes(this.tags.start)) {
-                if (checkForCode) {
-                    throw new Error(`Nested STEVE tags are not allowed! ...${current}...`);
+            // if we just found the start tag
+            if (_current.includes(this.tags.start)) {
+                // check current state, throw errors if necessary
+                if (_checkForCode) {
+                    throw new Error(`Nested STEVE tags are not allowed! ...${_current}...`);
                 } else {
-                    result += current.slice(0, -this.tags.start.length);
+                    // remove tag and add text to end result and start code checking
+                    _result += _current.slice(0, -this.tags.start.length);
 
-                    current = '';
-                    checkForCode = true;
+                    _current = '';
+                    _checkForCode = true;
                 }
-            } else if (current.includes(this.tags.end)) {
-                if (checkForCode) {
-                    const fragment = eval(`(() => {const ${this.globalName} = ${objectToString(this.#createGlobalObject(data))}; ${current.slice(0, -this.tags.end.length) }})()`);
-                    if (fragment != null) {
-                        result += fragment;
+            // if we just found the end tag
+            } else if (_current.includes(this.tags.end)) {
+                // check current state, throw errors if necessary
+                if (_checkForCode) {
+                    // create code that is localized only to itself and the global STEVE object
+                    // WARNING: using eval here is bad, probably should replace it with something better
+                    const _fragment = eval(`(() => {const ${this.globalName} = ${objectToString(this.#createGlobalObject(_data))}; ${_current.slice(0, -this.tags.end.length) }})()`);
+                    if (_fragment != null) {
+                        _result += _fragment;
                     }
 
-                    current = '';
-                    checkForCode = false;
+                    _current = '';
+                    _checkForCode = false;
                 } else {
-                    throw new Error(`Unmatched end STEVE tag found! ...${current}...`);
+                    throw new Error(`Unmatched end STEVE tag found! ...${_current}...`);
                 }
             }
         }
 
-        if (checkForCode) {
-            throw new Error(`Unmatched start STEVE tag found! ...${current}...`);
+        if (_checkForCode) {
+            throw new Error(`Unmatched start STEVE tag found! ...${_current}...`);
         }
 
-        return result + current;
+        return _result + _current;
     }
 }
 

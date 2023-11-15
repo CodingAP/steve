@@ -1,9 +1,9 @@
 # STEVE
 
-### Last Modified: 11/12/2023
+### Last Modified: 11/15/2023
 
 ## Template Engine:
-Any file can be processed by `STEVE`. All it uses is `%{= // javascript code here =}%` to create a block that can be ran. Anything returned will be rendered. For example...
+Any file can be processed by `STEVE`. All it uses is `<steve> // javascript code here </steve>` to create a block that can be ran. Anything returned will be rendered. For example...
 
 ```javascript
 <steve>
@@ -53,6 +53,8 @@ STEVE.renderFile('./template.steve', { number: 123, name: 'AP' });
 <h1>Hello AP!</h1>
 <p>Your number squared is 15129!</p>
 ```
+
+`STEVE` also has a `render` function that takes the raw string.
 
 To use `include(file, data)`, please define the `includeDirectory` using...
 
@@ -207,7 +209,8 @@ output/
 ```
 
 `SiteGenerator` also augments the global `STEVE` object, which adds these functions/data:
-- `static`: Generates a link to the static directory to allows for correct routing
+- `staticFile`: Generates a link to the static directory to allows for correct routing
+- `joinPaths`: Joins all the paths to create one string (Same as path.join)
 
 To generate the site, you use the `generate` function with the routes needed...
 

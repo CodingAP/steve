@@ -2,11 +2,15 @@
  * @module src/plugin/site_generator
  * src/plugin/site_generator.js
  * 
- * The code to make plugins that add to the functionality of STEVE
+ * The SiteGenerator plugin add functionality to STEVE to generate static websites
  * 
  * by Alex Prosser
- * 11/10/2023
+ * 11/15/2023
  */
+
+import fs from 'fs';
+import path from 'path';
+import { STEVE, STEVEPlugin } from '../../index.js';
 
 /**
  * The options for the SiteGenerator
@@ -53,10 +57,17 @@
  * @property {string} content The rendered content
  */
 
-import fs from 'fs';
-import path from 'path';
-import { STEVE, STEVEPlugin } from '../../index.js';
-
+/**
+ * Class that holds all the necessary information to generate a single page
+ * 
+ * It will take the form of this structure:
+ * 
+ * ```
+ * /[name]
+ * |
+ * +-- index.html
+ * ```
+ */
 class SingleRoute {
     /**
      * Either the raw content or the file name for the generated file
@@ -229,6 +240,9 @@ class SiteGenerator extends STEVEPlugin {
                     fs.unlinkSync(filename);
                 }
             });
+        // make output directory if it doesn't exist
+        } else {
+            fs.mkdirSync(this.#outputDirectory, { recursive: true });
         }
 
         // if staticDirectory exists, copy it to static in output
@@ -278,6 +292,7 @@ class SiteGenerator extends STEVEPlugin {
      */
     augment() {
         // add path module to STEVE global modules to be used in file generators
+        STEVE.globalModules.fs = fs;
         STEVE.globalModules.path = path;
 
         /**
@@ -292,15 +307,28 @@ class SiteGenerator extends STEVEPlugin {
             }
 
             const filePath = STEVE.globalModules.path.join(this.staticDirectory, file);
-            if (!fs.existsSync(filePath)) {
+            if (!STEVE.globalModules.fs.existsSync(filePath)) {
                 throw new Error(`The file, ${file}, does not exist in the \'staticDirectory\' (${this.staticDirectory})!`);
             }
 
             return STEVE.globalModules.path.join('/static', file); 
         }
 
+        /**
+         * Joins all paths together
+         * 
+         * Same as path.join
+         * 
+         * @param  {...string} paths List of paths to join together 
+         * @returns Final path with all paths
+         */
+        const joinPaths = (...paths) => {
+            return STEVE.globalModules.path.join(...paths);
+        }
+
         return {
-            staticFile
+            staticFile,
+            joinPaths
         };
     }
 }
