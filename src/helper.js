@@ -25,10 +25,10 @@ const objectToString = obj => {
 
         if (typeof value === 'function') {
             value = value.toString();
+        } else if (value instanceof Array || typeof value === 'string') {
+            value = JSON.stringify(value);
         } else if (typeof value === 'object') {
             value = objectToString(value);
-        } else {
-            value = JSON.stringify(value);
         }
 
         result += `\n  ${key}: ${value}${index == key.length - 1 ? '' : ','}`;
