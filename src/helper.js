@@ -5,7 +5,7 @@
  * The main STEVE object that holds the template engine
  * 
  * by Alex Prosser
- * 11/9/2023
+ * 11/22/2023
  */
 
 import fs from 'fs';
@@ -31,7 +31,7 @@ const objectToString = obj => {
             value = objectToString(value);
         }
 
-        result += `\n  ${key}: ${value}${index == key.length - 1 ? '' : ','}`;
+        result += `\n  ${key}: ${value},`;
     });
     result += '\n}';
     return result;

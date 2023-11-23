@@ -5,7 +5,7 @@
  * The SiteGenerator plugin add functionality to STEVE to generate static websites
  * 
  * by Alex Prosser
- * 11/15/2023
+ * 11/22/2023
  */
 
 import fs from 'fs';
@@ -230,9 +230,11 @@ class SiteGenerator extends STEVEPlugin {
      * @returns {void}
      */
     generate(options) {
-        // clean up output directory
+        // clean up output directory (ignore . files/directories)
         if (fs.existsSync(this.#outputDirectory)) {
-            fs.readdirSync(this.#outputDirectory, { recursive: true }).forEach(name => {
+            fs.readdirSync(this.#outputDirectory).forEach(name => {
+                if (name.startsWith('.')) return;
+
                 const filename = path.join(this.#outputDirectory, name);
                 if (fs.statSync(filename).isDirectory()) {
                     fs.rmSync(filename, { recursive: true, force: true });
