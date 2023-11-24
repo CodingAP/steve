@@ -1,6 +1,6 @@
 # STEVE
 
-### Last Modified: 11/22/2023
+### Last Modified: 11/23/2023
 
 ## Template Engine:
 Any file can be processed by `STEVE`. All it uses is `<steve> // javascript code here </steve>` to create a block that can be ran. Anything returned will be rendered. For example...
@@ -154,7 +154,8 @@ STEVE.addPlugin(new SiteGenerator({
 
 The options provided are the following:
 - `staticDirectory`: path to the directory that stores all static files (javascript, images, styles, etc.). Can be left out if there is no static files.
-- `outputDirectory`: path to the output where the generated site will be (any directory that starts with a . will be ignored).
+- `outputDirectory`: path to the output where the generated site will be.
+- `ignoreFiles`: list of files to be ignored and not deleted when generating (automatically ignores files that start with .).
 - `showExtension`: boolean to indicate whether or not to show .html after every page. If true, the file will generate to html file of route name; If false, the file will generate to index.html and be put in folder of route name.
 
 #### `showExtension = true`

@@ -5,7 +5,7 @@
  * The SiteGenerator plugin add functionality to STEVE to generate static websites
  * 
  * by Alex Prosser
- * 11/22/2023
+ * 11/23/2023
  */
 
 import fs from 'fs';
@@ -18,6 +18,7 @@ import { STEVE, STEVEPlugin } from '../../index.js';
  * @typedef {Object} SiteGeneratorOptions
  * @property {string} staticDirectory Directory where static files are held
  * @property {string} outputDirectory Directory where the generated website will be put in
+ * @property {string[]} ignoredFiles List of files that will not be deleted when generating
  * @property {boolean} showExtension Whether or not to show .html in the URL after generating
  */
 
@@ -115,6 +116,23 @@ class SingleRoute {
     }
 }
 
+/**
+ * Class that holds all the necessary information to generate multiple page
+ * 
+ * It will take the form of this structure:
+ * 
+ * ```
+ * /[name]
+ * |
+ * +-- /[generated]
+ * |   |
+ * |   +-- index.html
+ * |
+ * +-- /[generated]
+ *     |
+ *     +-- index.html
+ * ```
+ */
 class GeneratorRoute {
     /**
      * Either the raw content or the file name for the template file
@@ -179,6 +197,9 @@ class GeneratorRoute {
     }
 }
 
+/**
+ * Class that takes all the SingleRoutes and GeneratorRoutes and compiles a website
+ */
 class SiteGenerator extends STEVEPlugin {
     PLUGIN_ID = 'SITE_GENERATOR';
 
@@ -188,6 +209,13 @@ class SiteGenerator extends STEVEPlugin {
      * @type {string}
      */
     staticDirectory = null;
+
+    /**
+     * List of files that are ignored when generating
+     * 
+     * @type {string[]}
+     */
+    #ignoredFiles = null;
 
     /**
      * Directory where the generated website will be put in
@@ -212,6 +240,8 @@ class SiteGenerator extends STEVEPlugin {
         super();
         this.staticDirectory = options.staticDirectory;
 
+        this.#ignoredFiles = options.ignoredFiles;
+
         if (options.outputDirectory == null) {
             throw new Error('Please provide an \'outputDirectory\' for the files to go to!');
         } else {
@@ -230,9 +260,10 @@ class SiteGenerator extends STEVEPlugin {
      * @returns {void}
      */
     generate(options) {
-        // clean up output directory (ignore . files/directories)
+        // clean up output directory (except ignored files/directories)
         if (fs.existsSync(this.#outputDirectory)) {
             fs.readdirSync(this.#outputDirectory).forEach(name => {
+                if (this.#ignoredFiles && this.#ignoredFiles.includes(name)) return;
                 if (name.startsWith('.')) return;
 
                 const filename = path.join(this.#outputDirectory, name);
