@@ -1,0 +1,15 @@
+{
+    "name": "@codingap/steve",
+    "version": "2.0.0",
+    "exports": "./index.ts",
+    "tasks": {
+        "dev": "deno run --watch main.ts",
+        "test": "deno test --allow-read --allow-write",
+        "format": "deno lint && deno fmt"
+    },
+    "imports": {},
+    "fmt": {
+        "indentWidth": 4,
+        "singleQuote": true
+    }
+}
