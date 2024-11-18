@@ -22,13 +22,19 @@ All the features and explanations are in the documentation markdown file.
 
 ## How to Run
 
-To install, run:
-`npm install steve-template-engine`
+Node installation:
+`npx jsr add @codingap/steve`
+
+Deno installation:
+`deno add jsr:@codingap/steve`
+
+Bun installation:
+`bunx jsr add @codingap/steve`
    
 ### Usage
 
 ```javascript
-import { STEVE } from 'steve-template-engine';
+import { STEVE } from '@codingap/steve';
 
 STEVE.render('Hello <steve> return Steve.data.name; </steve>!', { name: 'STEVE' });
 ```
