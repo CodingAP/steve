@@ -1,6 +1,6 @@
 # STEVE
 
-### Last Modified: 11/23/2023
+### Last Modified: 11/18/2024
 
 ## Template Engine:
 Any file can be processed by `STEVE`. All it uses is `<steve> // javascript code here </steve>` to create a block that can be ran. Anything returned will be rendered. For example...
@@ -27,23 +27,23 @@ Any file can be processed by `STEVE`. All it uses is `<steve> // javascript code
 </ul>
 ```
 
-These JavaScript blocks also have access to a global `STEVE` object that includes some methods to add outside code in the file. The `STEVE` object has these methods/variables:
+These JavaScript blocks also have access to a global `steve` object that includes some methods to add outside code in the file. The `steve` object has these methods/variables:
 - `data`: The data provided from the function who is rendering the file
 - `include(file, data)`: Loads the file from the `includeDirectory` with the data provided.
 
-To create a engine, use the `STEVE` object in NodeJS...
+To create a engine, use the `STEVE` object...
 
 Example:
 
 `template.steve`
 ```html
-<h1>Hello <steve> return STEVE.data.name; </steve>!</h1>
-<p>Your number squared is <steve> return Math.pow(STEVE.data.number, 2); </steve>!</p>
+<h1>Hello <steve> return steve.data.name; </steve>!</h1>
+<p>Your number squared is <steve> return Math.pow(steve.data.number, 2); </steve>!</p>
 ```
 
 `index.js`
 ```javascript
-import { STEVE } from 'steve';
+import { STEVE } from '@codingap/steve';
 
 STEVE.renderFile('./template.steve', { number: 123, name: 'AP' });
 ```
@@ -70,7 +70,7 @@ You can also modify how `STEVE` reads and compiles files as well. Such settings 
     ```javascript
     STEVE.tags = { start: ..., end: ... }
     ```
-- Name of the global `STEVE` object (current defaults to `Steve`)
+- Name of the global `STEVE` object (current defaults to `steve`)
   - To modify, use this code...
     ```javascript
     STEVE.globalName = ...;
@@ -119,7 +119,7 @@ STEVE.activePlugin = 'EXAMPLE2';
 ...
 ```
 
-Sometimes, you might want to add NodeJS modules into a `STEVEPlugin`. By default, there are no modules, but you can add modules to be used in the `augment` using the `globalModules` variable. Just add a module by using it like an object. For example...
+Sometimes, you might want to add modules into a `STEVEPlugin`. By default, there are no modules, but you can add modules to be used in the `augment` using the `globalModules` variable. Just add a module by using it like an object. For example...
 
 ```javascript
 ...
@@ -335,6 +335,3 @@ Here are the options for a `Generator`:
 - `generator`: List of files to be generated
   - `name`: Name of the route
   - `data`: Data specific to the generated files
-
-## ExpressJS Support
-Not implemented yet!

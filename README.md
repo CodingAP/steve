@@ -36,7 +36,7 @@ Bun installation:
 ```javascript
 import { STEVE } from '@codingap/steve';
 
-STEVE.render('Hello <steve> return Steve.data.name; </steve>!', { name: 'STEVE' });
+STEVE.render('Hello <steve> return steve.data.name; </steve>!', { name: 'STEVE' });
 ```
 
 Output:
