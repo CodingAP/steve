@@ -7,7 +7,7 @@
  * 11/18/2024
  */
 
-import { assertEquals, assertThrows } from 'jsr:@std/assert';
+import { assertEquals, assertThrows } from '@std/assert';
 import { ensureDir, exists } from 'jsr:@std/fs';
 import { GeneratorRoute, SingleRoute, SiteGenerator, STEVE } from '../index.ts';
 
@@ -274,6 +274,10 @@ Deno.test('SiteGenerator: handles ignored files correctly', async () => {
         `${outputDir}/delete.txt`,
         'This file should be deleted.',
     );
+    await Deno.writeTextFile(
+        `${outputDir}/.system`,
+        'This file should not be deleted.',
+    );
 
     // Create SiteGenerator instance
     const generator = new SiteGenerator({
@@ -289,6 +293,7 @@ Deno.test('SiteGenerator: handles ignored files correctly', async () => {
 
     // Validate that ignored files remain
     assertEquals(await exists(`${outputDir}/ignore.txt`), true);
+    assertEquals(await exists(`${outputDir}/.system`), true);
 
     // Validate that non-ignored files are deleted
     assertEquals(await exists(`${outputDir}/delete.txt`), false);

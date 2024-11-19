@@ -158,14 +158,13 @@ class SiteGenerator extends STEVEPlugin {
     ): void {
         // clean up the output directory by removing non-ignored files and directories
         if (existsSync(this.#outputDirectory)) {
-            for (const file of walkSync(this.#outputDirectory)) {
-                if (
-                    this.#ignoredFiles?.filter((filename) =>
-                            resolve(file.path).includes(filename)
-                        ).length > 0 ||
-                    file.name.startsWith('.') ||
-                    resolve(this.#outputDirectory) === file.path
-                ) continue;
+            const files = [...walkSync(this.#outputDirectory)].filter(file => {
+                return this.#ignoredFiles?.filter((filename) =>
+                    resolve(file.path).includes(filename)
+                ).length == 0 && !file.name.startsWith('.') && resolve(this.#outputDirectory) !== file.path
+            });
+
+            for (const file of files) {
                 Deno.removeSync(file.path, { recursive: true });
             }
         } else {
