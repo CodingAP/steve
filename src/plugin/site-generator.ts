@@ -160,7 +160,9 @@ class SiteGenerator extends STEVEPlugin {
         if (existsSync(this.#outputDirectory)) {
             for (const file of walkSync(this.#outputDirectory)) {
                 if (
-                    this.#ignoredFiles?.filter(filename => resolve(file.path).includes(filename)).length > 0 ||
+                    this.#ignoredFiles?.filter((filename) =>
+                            resolve(file.path).includes(filename)
+                        ).length > 0 ||
                     file.name.startsWith('.') ||
                     resolve(this.#outputDirectory) === file.path
                 ) continue;
@@ -268,6 +270,13 @@ class SiteGenerator extends STEVEPlugin {
          * @returns the URL to the static file
          */
         const staticFile = (file: string): string => {
+            const existsSync = STEVE.globalModules.existsSync as (
+                path: string,
+            ) => boolean;
+            const join = STEVE.globalModules.join as (
+                ...paths: string[]
+            ) => string;
+
             if (!this.staticDirectory) {
                 throw new Error(
                     "there is no 'staticDirectory' defined to get static file!",
@@ -285,12 +294,15 @@ class SiteGenerator extends STEVEPlugin {
         };
 
         /**
-         * joins paths together, ensuring a valid and consistent file 
+         * joins paths together, ensuring a valid and consistent file
          *
          * @param paths - the list of path segments to join
          * @returns the final joined path
          */
         const joinPaths = (...paths: string[]): string => {
+            const join = STEVE.globalModules.join as (
+                ...paths: string[]
+            ) => string;
             return join(...paths);
         };
 

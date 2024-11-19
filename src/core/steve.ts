@@ -184,11 +184,16 @@ class STEVE {
             augment = this.plugins[this.activePlugin].augment();
         }
 
+        const globalSTEVE: { [key: string]: unknown } = {
+            include,
+            data: _data,
+        };
+
         Object.keys(augment).forEach((key) => {
             const value = augment[key];
             if (typeof value === 'function') {
                 // replace all instances of 'this' with 'this.plugins[this.activePlugin]'
-                augment[key] = eval(
+                globalSTEVE[key] = eval(
                     value.toString().replace(
                         /this/g,
                         'this.plugins[this.activePlugin]',
@@ -196,12 +201,6 @@ class STEVE {
                 );
             }
         });
-
-        const globalSTEVE: { [key: string]: unknown } = {
-            include,
-            data: _data,
-            ...augment,
-        };
 
         return globalSTEVE;
     }

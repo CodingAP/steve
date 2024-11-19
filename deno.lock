@@ -4,6 +4,7 @@
     "jsr:@std/assert@*": "1.0.8",
     "jsr:@std/fs@*": "1.0.5",
     "jsr:@std/fs@1.0.5": "1.0.5",
+    "jsr:@std/fs@^1.0.5": "1.0.5",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/path@*": "1.0.7",
     "jsr:@std/path@1.0.7": "1.0.7",
@@ -28,5 +29,11 @@
     "@std/path@1.0.7": {
       "integrity": "76a689e07f0e15dcc6002ec39d0866797e7156629212b28f27179b8a5c3b33a1"
     }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/fs@^1.0.5",
+      "jsr:@std/path@^1.0.7"
+    ]
   }
 }

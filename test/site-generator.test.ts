@@ -9,7 +9,7 @@
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert';
 import { ensureDir, exists } from 'jsr:@std/fs';
-import { GeneratorRoute, SingleRoute, SiteGenerator } from '../index.ts';
+import { GeneratorRoute, SingleRoute, SiteGenerator, STEVE } from '../index.ts';
 
 // ~~~~~ SingleRoute testing ~~~~~
 Deno.test('SingleRoute: generates a single route with render content', () => {
@@ -277,10 +277,8 @@ Deno.test('SiteGenerator: handles ignored files correctly', async () => {
 
     // Create SiteGenerator instance
     const generator = new SiteGenerator({
-        staticDirectory: '',
         outputDirectory: outputDir,
         ignoredFiles: ['ignore.txt'],
-        showExtension: false,
     });
 
     // Define routes (empty for simplicity)
@@ -329,4 +327,31 @@ Deno.test('SiteGenerator: throws error when outputDirectory is not provided', ()
         Error,
         "please provide an 'outputDirectory' for the files to go to!",
     );
+});
+
+Deno.test('SiteGenerator: check to see if global modules work', async () => {
+    const tempDir = await Deno.makeTempDir();
+    const outputDir = `${tempDir}/output`;
+
+    // Create SiteGenerator instance
+    STEVE.addPlugin(
+        new SiteGenerator({
+            outputDirectory: outputDir,
+        }),
+    );
+
+    // Generate the site
+    STEVE.generate({
+        root: new SingleRoute({
+            render:
+                '<steve> return steve.joinPaths(...steve.data.paths); </steve>',
+            data: { paths: ['hello', 'world'] },
+        }),
+    });
+
+    const text = await Deno.readTextFile(`${outputDir}/index.html`);
+    assertEquals(text.includes('hello\\world'), true);
+
+    // Cleanup
+    await Deno.remove(tempDir, { recursive: true });
 });
