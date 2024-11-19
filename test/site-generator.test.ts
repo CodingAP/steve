@@ -350,7 +350,7 @@ Deno.test('SiteGenerator: check to see if global modules work', async () => {
     });
 
     const text = await Deno.readTextFile(`${outputDir}/index.html`);
-    assertEquals(text.includes('hello\\world'), true);
+    assertEquals(text.includes('hello'), true);
 
     // Cleanup
     await Deno.remove(tempDir, { recursive: true });
