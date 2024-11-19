@@ -86,7 +86,9 @@ class STEVE {
 
         for (const file of walkSync(includePath)) {
             if (file.isFile) {
-                this.#includes[relative(includePath, file.path)] = Deno
+                this.#includes[
+                    relative(includePath, file.path).replace(/\\/g, '/')
+                ] = Deno
                     .readTextFileSync(file.path);
             }
         }

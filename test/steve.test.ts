@@ -9,6 +9,7 @@
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert';
 import { STEVE, STEVEPlugin } from '../index.ts';
+import { ensureDir } from '@std/fs';
 
 class MockPlugin extends STEVEPlugin {
     override PLUGIN_ID = 'MOCK_PLUGIN';
@@ -35,6 +36,26 @@ Deno.test('STEVE: set and get includeDirectory', async () => {
     const includes = STEVE.includeDirectory;
     assertEquals(Object.keys(includes).length, 1);
     assertEquals(includes['template.html'], 'Hello, World!');
+
+    await Deno.remove(tempDir, { recursive: true });
+});
+
+Deno.test('STEVE: includeDirectory handles nested files', async () => {
+    const tempDir = await Deno.makeTempDir();
+    const subDir = `${tempDir}/sub`;
+    await ensureDir(subDir);
+    const templateFile1 = `${tempDir}/template.html`;
+    const templateFile2 = `${subDir}/nested.html`;
+
+    await Deno.writeTextFile(templateFile1, 'Root Template');
+    await Deno.writeTextFile(templateFile2, 'Nested Template');
+
+    STEVE.includeDirectory = tempDir;
+
+    const includes = STEVE.includeDirectory;
+    assertEquals(Object.keys(includes).length, 2);
+    assertEquals(includes['template.html'], 'Root Template');
+    assertEquals(includes['sub/nested.html'], 'Nested Template');
 
     await Deno.remove(tempDir, { recursive: true });
 });
