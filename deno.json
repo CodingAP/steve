@@ -7,7 +7,10 @@
         "test": "deno test --fail-fast --allow-read --allow-write",
         "format": "deno lint && deno fmt"
     },
-    "imports": {},
+    "imports": {
+        "@std/fs": "jsr:@std/fs@^1.0.5",
+        "@std/path": "jsr:@std/path@^1.0.7"
+    },
     "fmt": {
         "indentWidth": 4,
         "singleQuote": true

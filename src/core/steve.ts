@@ -8,8 +8,8 @@
  * 11/18/2024
  */
 
-import { walkSync } from 'jsr:@std/fs@1.0.5';
-import { relative } from 'jsr:@std/path@1.0.7';
+import { walkSync } from '@std/fs';
+import { relative } from '@std/path';
 import type STEVEPlugin from './plugin.ts';
 
 /**

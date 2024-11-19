@@ -8,8 +8,8 @@
  * 11/18/2024
  */
 
-import { copySync, existsSync, walkSync } from 'jsr:@std/fs@1.0.5';
-import { join, resolve } from 'jsr:@std/path@1.0.7';
+import { copySync, existsSync, walkSync } from '@std/fs';
+import { join, resolve } from '@std/path';
 import { STEVE, STEVEPlugin } from '../../index.ts';
 
 /**
@@ -160,7 +160,7 @@ class SiteGenerator extends STEVEPlugin {
         if (existsSync(this.#outputDirectory)) {
             for (const file of walkSync(this.#outputDirectory)) {
                 if (
-                    this.#ignoredFiles?.includes(file.name) ||
+                    this.#ignoredFiles?.filter(filename => resolve(file.path).includes(filename)).length > 0 ||
                     file.name.startsWith('.') ||
                     resolve(this.#outputDirectory) === file.path
                 ) continue;
