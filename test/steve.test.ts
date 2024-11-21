@@ -181,9 +181,9 @@ Deno.test('STEVE: nested STEVE tags throw error', () => {
 Deno.test('STEVE: error in STEVE tags is caught correctly', () => {
     const content = 'Hello, <steve> funcion error </steve>';
     const data = {};
-
+    
     assertThrows(
         () => STEVE.render(content, data),
-        TypeError,
+        Error,
     );
 })

@@ -2,7 +2,7 @@
 
 `STEVE` is a configurable template engine that allows JavaScript to run in files to create files. It has a plugin system to allow for custom generation and a built-in site generator.
 
-***ST***atic Sit_**E**_ Generator (***VE***ry cool)
+***ST***atic Sit***E*** Generator (***VE***ry cool)
 
 ### by AP
 

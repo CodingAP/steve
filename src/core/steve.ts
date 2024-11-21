@@ -243,7 +243,7 @@ class STEVE {
                             _result += _fragment;
                         }
                     } catch (err) {
-                        throw new Error(`${err} inside STEVE tags: ${_current.slice(0, -this.tags.end.length)}`)
+                        throw new Error(`${err} inside STEVE tags: ${_current.slice(0, -this.tags.end.length).slice(0, 50)}...`)
                     }
 
                     _current = '';
