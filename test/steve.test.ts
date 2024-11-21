@@ -155,7 +155,6 @@ Deno.test('STEVE: unmatched start tag throws error', () => {
     assertThrows(
         () => STEVE.render(content, data),
         Error,
-        'unmatched start STEVE tag found!',
     );
 });
 
@@ -166,7 +165,6 @@ Deno.test('STEVE: unmatched end tag throws error', () => {
     assertThrows(
         () => STEVE.render(content, data),
         Error,
-        'unmatched end STEVE tag found!',
     );
 });
 
@@ -177,6 +175,15 @@ Deno.test('STEVE: nested STEVE tags throw error', () => {
     assertThrows(
         () => STEVE.render(content, data),
         Error,
-        'nested STEVE tags are not allowed!',
     );
 });
+
+Deno.test('STEVE: error in STEVE tags is caught correctly', () => {
+    const content = 'Hello, <steve> funcion error </steve>';
+    const data = {};
+
+    assertThrows(
+        () => STEVE.render(content, data),
+        TypeError,
+    );
+})

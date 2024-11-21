@@ -1,6 +1,6 @@
 {
     "name": "@codingap/steve",
-    "version": "2.0.7",
+    "version": "2.0.8",
     "exports": "./index.ts",
     "description": "STEVE is a configurable template engine that allows JavaScript to run in files to create files. It has a plugin system to allow for custom generation and a built-in site generator.",
     "tasks": {

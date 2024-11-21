@@ -232,13 +232,18 @@ class STEVE {
                 }
             } else if (_current.includes(this.tags.end)) {
                 if (_checkForCode) {
-                    const _fragment = eval(
-                        `(() => {const ${this.globalName} = ${
-                            objectStringify(this.#createGlobalObject(_data))
-                        }; ${_current.slice(0, -this.tags.end.length)}})()`,
-                    );
-                    if (_fragment != null) {
-                        _result += _fragment;
+                    try {
+                        const _fragment = eval(
+                            `(() => {const ${this.globalName} = ${
+                                objectStringify(this.#createGlobalObject(_data))
+                            }; ${_current.slice(0, -this.tags.end.length)}})()`,
+                        );
+
+                        if (_fragment != null) {
+                            _result += _fragment;
+                        }
+                    } catch (err) {
+                        throw new Error(`${err} inside STEVE tags: ${_current.slice(0, -this.tags.end.length)}`)
                     }
 
                     _current = '';
