@@ -165,7 +165,9 @@ class SiteGenerator extends STEVEPlugin {
             });
 
             for (const file of files) {
-                Deno.removeSync(file.path, { recursive: true });
+                if (existsSync(file.path)) {
+                    Deno.removeSync(file.path, { recursive: true });
+                }
             }
         } else {
             // create the output directory if it doesn't exist
