@@ -9,7 +9,7 @@
  */
 
 import { copySync, existsSync, walkSync } from '@std/fs';
-import { join, resolve } from '@std/path';
+import { join, relative } from '@std/path';
 import { STEVE, STEVEPlugin } from '../../index.ts';
 
 /**
@@ -66,12 +66,12 @@ class SingleRoute {
 
     constructor(options: SingleRouteOptions) {
         if (!options.render) {
-            throw new Error("please provide 'render'!");
+            throw new Error('please provide \'render\'!');
         }
         this.#render = options.render;
 
         if (!options.data) {
-            throw new Error("please provide 'data'!");
+            throw new Error('please provide \'data\'!');
         }
         this.#data = options.data;
 
@@ -97,17 +97,17 @@ class GeneratorRoute {
 
     constructor(options: GeneratorRouteOptions) {
         if (!options.render) {
-            throw new Error("please provide 'render'!");
+            throw new Error('please provide \'render\'!');
         }
         this.#render = options.render;
 
         if (!options.data) {
-            throw new Error("please provide 'data'!");
+            throw new Error('please provide \'data\'!');
         }
         this.#data = options.data;
 
-        if (!options.generator || options.generator.length == 0) {
-            throw new Error('please provide a non-empty generator!');
+        if (!options.generator) {
+            throw new Error('please provide \'generator\'!');
         }
         this.#generator = options.generator;
 
@@ -146,7 +146,7 @@ class SiteGenerator extends STEVEPlugin {
         this.#ignoredFiles = options.ignoredFiles ?? [];
         if (!options.outputDirectory) {
             throw new Error(
-                "please provide an 'outputDirectory' for the files to go to!",
+                'please provide an \'outputDirectory\' for the files to go to!',
             );
         }
         this.#outputDirectory = options.outputDirectory;
@@ -159,9 +159,10 @@ class SiteGenerator extends STEVEPlugin {
         // clean up the output directory by removing non-ignored files and directories
         if (existsSync(this.#outputDirectory)) {
             const files = [...walkSync(this.#outputDirectory)].filter(file => {
-                return this.#ignoredFiles?.filter((filename) =>
-                    resolve(file.path).includes(filename)
-                ).length == 0 && !file.name.startsWith('.') && resolve(this.#outputDirectory) !== file.path
+                const filename = relative(this.#outputDirectory, file.path);
+                return this.#ignoredFiles?.filter((f) =>
+                    filename.includes(f)
+                ).length == 0 && !filename.startsWith('.') && filename != ''
             });
 
             for (const file of files) {
@@ -280,7 +281,7 @@ class SiteGenerator extends STEVEPlugin {
 
             if (!this.staticDirectory) {
                 throw new Error(
-                    "there is no 'staticDirectory' defined to get static file!",
+                    'there is no \'staticDirectory\' defined to get static file!',
                 );
             }
 

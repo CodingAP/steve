@@ -10,6 +10,7 @@
 import { assertEquals, assertThrows } from '@std/assert';
 import { ensureDir, exists } from 'jsr:@std/fs';
 import { GeneratorRoute, SingleRoute, SiteGenerator, STEVE } from '../index.ts';
+import { join } from '@std/path/join';
 
 // ~~~~~ SingleRoute testing ~~~~~
 Deno.test('SingleRoute: generates a single route with render content', () => {
@@ -99,20 +100,6 @@ Deno.test("GeneratorRoute: throws error when 'render' is empty", () => {
             }),
         Error,
         "please provide 'render'!",
-    );
-});
-
-Deno.test("GeneratorRoute: throws error when 'generator' is empty", () => {
-    assertThrows(
-        () =>
-            new GeneratorRoute({
-                render: 'test string',
-                data: {},
-                isFile: false,
-                generator: [],
-            }),
-        Error,
-        'please provide a non-empty generator!',
     );
 });
 
@@ -278,6 +265,11 @@ Deno.test('SiteGenerator: handles ignored files correctly', async () => {
         `${outputDir}/.system`,
         'This file should not be deleted.',
     );
+    await ensureDir(join(outputDir, '.git'));
+    await Deno.writeTextFile(
+        join(outputDir, '.git', 'HEAD'),
+        'This file should not be deleted.',
+    );
 
     // Create SiteGenerator instance
     const generator = new SiteGenerator({
@@ -294,6 +286,7 @@ Deno.test('SiteGenerator: handles ignored files correctly', async () => {
     // Validate that ignored files remain
     assertEquals(await exists(`${outputDir}/ignore.txt`), true);
     assertEquals(await exists(`${outputDir}/.system`), true);
+    assertEquals(await exists(`${outputDir}/.git/HEAD`), true);
 
     // Validate that non-ignored files are deleted
     assertEquals(await exists(`${outputDir}/delete.txt`), false);
